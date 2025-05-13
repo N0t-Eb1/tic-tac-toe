@@ -272,5 +272,3 @@ function startGame() {
     }
     alert("Thank you for playing my game");
 }
-
-startGame();

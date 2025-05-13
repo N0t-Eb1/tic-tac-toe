@@ -1,0 +1,14 @@
+@import url("https://fonts.googleapis.com/css2?family=Cal+Sans&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+
+.font-title {
+    font-family: "Cal Sans", sans-serif;
+}
+
+.appear {
+    animation: appear 0.8s;
+}
+
+.disappear {
+    animation: disappear 0.8s;
+    display: none;
+}

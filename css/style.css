@@ -1,0 +1,57 @@
+@import "./utility.css";
+@import "./reset.css";
+@import "./variables.css";
+@import "./animations.css";
+
+html {
+    font-size: clamp(16px, 12.5714px + 0.9524vw, 24px);
+}
+
+body {
+    background-color: var(--bg-primary);
+    color: var(--primary);
+    font-family: "Roboto", sans-serif;
+    display: grid;
+    place-content: center;
+}
+
+section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+
+button {
+    color: var(--bg-primary);
+}
+
+header {
+    & h1 {
+        font-size: 3rem;
+        letter-spacing: 0.05rem;
+        text-transform: uppercase;
+    }
+
+    & p {
+        font-size: 1rem;
+        position: relative;
+        top: -1rem;
+        text-align: end;
+        padding-right: 0.5rem;
+    }
+}
+
+.btn {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    font-size: 1.25rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    align-self: stretch;
+
+    &:hover {
+        background-color: var(--secondary);
+    }
+}
