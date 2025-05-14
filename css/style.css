@@ -44,14 +44,15 @@ section {
     gap: 1rem;
 
     & div {
-        --pad: 0.5rem;
+        --pad-up-down: 0.5rem;
+        --pad-left-right: 0.75rem;
         position: relative;
     }
 
     & label {
         position: absolute;
-        top: var(--pad);
-        left: var(--pad);
+        top: var(--pad-up-down);
+        left: var(--pad-left-right);
         pointer-events: none;
         color: var(--tertiary);
         text-transform: capitalize;
@@ -60,7 +61,7 @@ section {
     }
 
     & input {
-        padding: var(--pad);
+        padding: var(--pad-up-down) var(--pad-left-right);
         background-color: #171717;
         border-bottom: 0.125rem solid #555;
         color: var(--secondary);
@@ -68,7 +69,8 @@ section {
 
     & input:focus + label,
     & input:not(:placeholder-shown) + label {
-        transform: translateY(calc(-50% - var(--pad))) scale(0.75);
+        transform: translateY(calc(-50% - var(--pad-up-down)))
+            translateX(calc(var(--pad-left-right) / -2)) scale(0.75);
     }
 
     & svg {
