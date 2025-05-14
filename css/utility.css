@@ -5,10 +5,10 @@
 }
 
 .appear {
+    display: flex !important;
     animation: appear 0.8s;
 }
 
 .disappear {
-    animation: disappear 0.8s;
-    display: none;
+    animation: disappear 0.8s forwards;
 }

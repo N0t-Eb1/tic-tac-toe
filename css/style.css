@@ -23,6 +23,79 @@ section {
     gap: 2rem;
 }
 
+.names {
+    display: none;
+    align-items: stretch;
+
+    & h2 {
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+    }
+
+    & .btn {
+        margin-top: 1rem;
+    }
+}
+
+.input-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+
+    & div {
+        --pad: 0.5rem;
+        position: relative;
+    }
+
+    & label {
+        position: absolute;
+        top: var(--pad);
+        left: var(--pad);
+        pointer-events: none;
+        color: var(--tertiary);
+        text-transform: capitalize;
+        transform-origin: left;
+        transition: 0.2s;
+    }
+
+    & input {
+        padding: var(--pad);
+        background-color: #171717;
+        border-bottom: 0.125rem solid #555;
+        color: var(--secondary);
+    }
+
+    & input:focus + label,
+    & input:not(:placeholder-shown) + label {
+        transform: translateY(calc(-50% - var(--pad))) scale(0.75);
+    }
+
+    & svg {
+        width: 2.5rem;
+    }
+
+    & input::placeholder {
+        opacity: 0;
+    }
+
+    & div::after {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: 0%;
+        content: "";
+        height: 0.125rem;
+        background-color: var(--primary);
+        transition: 0.2s;
+        transform: translateX(-50%);
+    }
+
+    & div:focus-within::after {
+        width: 100%;
+    }
+}
+
 button {
     color: var(--bg-primary);
 }
@@ -44,12 +117,12 @@ header {
 }
 
 .btn {
+    align-self: stretch;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
     font-size: 1.25rem;
     font-weight: bold;
     text-transform: uppercase;
-    align-self: stretch;
 
     &:hover {
         background-color: var(--secondary);

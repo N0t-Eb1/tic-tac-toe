@@ -1,5 +1,6 @@
 :root {
     --bg-primary: #0d0d0d;
     --primary: #f2f2f2;
-    --secondary: hsl(0, 0%, 80%);
+    --secondary: #cccccc;
+    --tertiary: hsl(0, 0%, 50%);
 }

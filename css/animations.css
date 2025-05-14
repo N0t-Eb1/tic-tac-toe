@@ -1,7 +1,7 @@
 @keyframes appear {
     from {
         opacity: 0;
-        transform: translateY(100%);
+        transform: translateY(10rem);
     }
 
     to {
@@ -11,13 +11,9 @@
 }
 
 @keyframes disappear {
-    from {
-        display: flex;
-    }
-
     to {
         display: none;
         opacity: 0;
-        transform: translateY(-100%);
+        transform: translateY(-10rem);
     }
 }

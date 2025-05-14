@@ -15,7 +15,7 @@
 }
 
 body {
-    min-height: 100vh;
+    height: 100vh;
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
 }
@@ -83,4 +83,12 @@ button {
     @media screen and (-ms-high-contrast: active) {
         border: 2px solid currentcolor;
     }
+}
+
+input {
+    border: none;
+    appearance: none;
+    outline: none;
+    font-size: 1rem;
+    padding: 0.25em 0.75rem;
 }
