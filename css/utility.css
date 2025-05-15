@@ -13,3 +13,19 @@
 .error {
     animation: shake 0.5s;
 }
+
+.selected {
+    color: white !important;
+    font-size: 1.1rem !important;
+    transform: scaleX(1.05) !important;
+    &:nth-child(1) {
+        background-color: rgb(93, 193, 255) !important;
+    }
+    &:nth-child(2) {
+        background-color: lightcoral !important;
+    }
+    &:nth-child(3) {
+        background-color: #e9e3e3 !important;
+        color: black !important;
+    }
+}

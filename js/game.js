@@ -180,15 +180,30 @@ const GUIprops = (function () {
         const inputFields = document.querySelectorAll("#player-name");
         inputFields.forEach((elm, i) => {
             players.changeName(i, elm.value.trim());
+            document.querySelector(
+                `.container div:nth-child(${i + 1})`
+            ).textContent = elm.value;
         });
     };
 
-    return { setNames };
+    const setStartingPlayer = () => {
+        const options = document.querySelectorAll(".container div");
+        options.forEach((elm) => {
+            if (elm.classList.contains("selected"))
+                gameLogic.setStartingPlayer(+elm.dataset.player);
+        });
+    };
+
+    return { setNames, setStartingPlayer };
 })();
 
 const actions = (function () {
     document.querySelector(".next-btn").addEventListener("click", () => {
         GUIprops.setNames();
+    });
+
+    document.querySelector(".play-btn").addEventListener("click", () => {
+        GUIprops.setStartingPlayer();
     });
 })();
 

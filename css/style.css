@@ -26,7 +26,8 @@ section {
     transition-behavior: allow-discrete;
 }
 
-.names {
+.names,
+.starting-player {
     align-items: stretch;
 
     & h2 {
@@ -115,6 +116,41 @@ section {
 
         & .x {
             fill: lightcoral;
+        }
+    }
+}
+
+.starting-player {
+    text-align: center;
+    width: 17.514375rem;
+
+    & .container {
+        padding: 0 1.7514375rem;
+        text-align: center;
+        align-self: stretch;
+    }
+
+    & .container div {
+        color: var(--secondary);
+        user-select: none;
+        padding: 0.4rem 0;
+        border-radius: 8px;
+        background-color: #171717;
+        cursor: pointer;
+        transition-property: background-color, color, font-size, transform;
+        transition-duration: 0.15s;
+    }
+
+    & div:has(+ div) {
+        margin-bottom: 1.2rem;
+    }
+
+    & .container div {
+        &:nth-child(1) {
+        }
+        &:nth-child(2) {
+        }
+        &:nth-child(3) {
         }
     }
 }
