@@ -75,6 +75,11 @@ section {
 
     & svg {
         width: 2.5rem;
+        transition: 0.2s;
+
+        &.x {
+            width: 2.8rem;
+        }
     }
 
     & input::placeholder {
@@ -95,6 +100,20 @@ section {
 
     & div:focus-within::after {
         width: 100%;
+    }
+
+    &:focus-within {
+        & svg {
+            transform: scale(1.2);
+        }
+
+        & .circle {
+            fill: lightskyblue;
+        }
+
+        & .x {
+            fill: lightcoral;
+        }
     }
 }
 
