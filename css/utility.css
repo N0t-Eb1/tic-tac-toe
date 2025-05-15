@@ -20,10 +20,10 @@
     transform: scaleX(1.05) !important;
     font-weight: 500 !important;
     &:nth-child(1) {
-        background-color: rgb(93, 193, 255) !important;
+        background-color: #3381b1 !important;
     }
     &:nth-child(2) {
-        background-color: lightcoral !important;
+        background-color: #d66c6c !important;
     }
     &:nth-child(3) {
         background-color: #e9e3e3 !important;
