@@ -21,10 +21,12 @@ section {
     justify-content: center;
     align-items: center;
     gap: 2rem;
+    transition-property: opacity, display, transform;
+    transition-duration: 0.8s;
+    transition-behavior: allow-discrete;
 }
 
 .names {
-    display: none;
     align-items: stretch;
 
     & h2 {
@@ -147,5 +149,12 @@ header {
 
     &:hover {
         background-color: var(--secondary);
+    }
+}
+
+@starting-style {
+    section {
+        opacity: 0;
+        transform: translateY(10rem);
     }
 }

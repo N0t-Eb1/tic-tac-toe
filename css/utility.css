@@ -4,11 +4,8 @@
     font-family: "Cal Sans", sans-serif;
 }
 
-.appear {
-    display: flex !important;
-    animation: appear 0.8s;
-}
-
-.disappear {
-    animation: disappear 0.8s forwards;
+.hidden {
+    display: none;
+    opacity: 0;
+    transform: translateY(-10rem);
 }

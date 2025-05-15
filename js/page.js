@@ -3,9 +3,8 @@ const init = document.querySelector(".init");
 const names = document.querySelector(".names");
 
 startBtn.addEventListener("click", () => {
-    init.classList.add("disappear");
-    init.classList.remove("appear");
+    init.classList.add("hidden");
     setTimeout(() => {
-        names.classList.add("appear");
-    }, 800);
+        names.classList.remove("hidden");
+    }, 801);
 });

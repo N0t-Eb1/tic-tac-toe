@@ -8,14 +8,14 @@
         <script src="./js/page.js" defer></script>
     </head>
     <body>
-        <section class="init appear">
+        <section class="init">
             <header>
                 <h1 class="font-title">tic tac toe!</h1>
                 <p>the game</p>
             </header>
             <button class="btn start-btn">start</button>
         </section>
-        <section class="names">
+        <section class="names hidden">
             <h2>setting player names</h2>
             <div class="input-container">
                 <svg
@@ -29,7 +29,12 @@
                     />
                 </svg>
                 <div>
-                    <input type="text" id="player-name" placeholder="name" />
+                    <input
+                        type="text"
+                        id="player-name"
+                        placeholder="name"
+                        autocomplete="off"
+                    />
                     <label for="player-name">first player</label>
                 </div>
             </div>
@@ -45,7 +50,12 @@
                     />
                 </svg>
                 <div>
-                    <input type="text" id="player-name" placeholder="name" />
+                    <input
+                        type="text"
+                        id="player-name"
+                        placeholder="name"
+                        autocomplete="off"
+                    />
                     <label for="player-name">second player</label>
                 </div>
             </div>
