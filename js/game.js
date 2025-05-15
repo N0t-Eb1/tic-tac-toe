@@ -179,7 +179,7 @@ const GUIprops = (function () {
     const setNames = () => {
         const inputFields = document.querySelectorAll("#player-name");
         inputFields.forEach((elm, i) => {
-            players.changeName(i, elm.value);
+            players.changeName(i, elm.value.trim());
         });
     };
 

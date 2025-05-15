@@ -1,6 +1,7 @@
 @import "./utility.css";
 @import "./reset.css";
 @import "./variables.css";
+@import "./animations.css";
 
 html {
     font-size: clamp(16px, 12.5714px + 0.9524vw, 24px);

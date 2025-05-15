@@ -9,3 +9,7 @@
     opacity: 0;
     transform: translateY(-9rem);
 }
+
+.error {
+    animation: shake 0.5s;
+}
