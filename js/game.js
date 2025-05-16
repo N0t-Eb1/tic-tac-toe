@@ -123,22 +123,13 @@ const gameLogic = (function () {
         return arr.length === 3 ? true : false;
     };
 
-    const checkForWinner = () => {
-        let hasWinner = false;
-        for (let i = 1; i <= 3; i++) {
-            if (checkRow(i) || checkColumn(i)) hasWinner = true;
-        }
-        for (let i = 1; i <= 2; i++) {
-            if (slopeLinesCheck(i)) hasWinner = true;
-        }
-        return hasWinner;
-    };
-
     return {
         setStartingPlayer,
         getCurrent,
         changeTurn,
-        checkForWinner,
+        checkRow,
+        checkColumn,
+        slopeLinesCheck,
     };
 })();
 
@@ -193,7 +184,84 @@ const GUIprops = (function () {
                 </svg>`;
     };
 
-    return { setNames, setStartingPlayer, setSpan, placeMarker };
+    const checkWinner = () => {
+        const elems = [];
+
+        for (let i = 1; i <= 3; i++) {
+            if (gameLogic.checkRow(i)) {
+                for (let j = 1; j <= 3; j++)
+                    elems.push(
+                        document.querySelector(
+                            `.grid div[data-row="${i.toString()}"][data-col="${j.toString()}"] svg`
+                        )
+                    );
+                break;
+            }
+
+            if (gameLogic.checkColumn(i)) {
+                for (let j = 1; j <= 3; j++)
+                    elems.push(
+                        document.querySelector(
+                            `.grid div[data-row="${j.toString()}"][data-col="${i.toString()}"] svg`
+                        )
+                    );
+                break;
+            }
+        }
+
+        if (elems.length === 0) {
+            if (gameLogic.slopeLinesCheck(1))
+                for (let i = 1; i <= 3; i++)
+                    elems.push(
+                        document.querySelector(
+                            `.grid div[data-row="${i.toString()}"][data-col="${i.toString()}"] svg`
+                        )
+                    );
+            if (gameLogic.slopeLinesCheck(2)) {
+                for (let i = 1; i <= 3; i++)
+                    for (let j = 1; j <= 3; j++)
+                        if (i + j === 4)
+                            elems.push(
+                                document.querySelector(
+                                    `.grid div[data-row="${i.toString()}"][data-col="${j.toString()}"] svg`
+                                )
+                            );
+            }
+        }
+
+        if (elems.length === 0) {
+            return false;
+        } else {
+            elems.forEach((elem) => {
+                elem.classList.add("winner");
+            });
+            return true;
+        }
+    };
+
+    const renderWinner = () => {
+        const text = document.createElement("div");
+        const span = document.createElement("span");
+        span.textContent = gameLogic.getCurrent().name;
+        span.style.color = gameLogic.getCurrent().color;
+        text.textContent = " won!";
+        text.prepend(span);
+        document.querySelector(".player-turn").replaceWith(text);
+    };
+
+    const renderDraw = () => {
+        document.querySelector(".player-turn").textContent = "it's a draw!";
+    };
+
+    return {
+        setNames,
+        setStartingPlayer,
+        setSpan,
+        placeMarker,
+        checkWinner,
+        renderWinner,
+        renderDraw,
+    };
 })();
 
 const actions = (function () {
@@ -206,6 +274,7 @@ const actions = (function () {
         GUIprops.setSpan();
     });
 
+    const gridContainer = document.querySelector(".grid");
     const gridCells = document.querySelectorAll(".grid div");
     gridCells.forEach((cell) => {
         cell.addEventListener("click", () => {
@@ -221,106 +290,18 @@ const actions = (function () {
                 +cell.dataset.row,
                 +cell.dataset.col
             );
+            if (GUIprops.checkWinner()) {
+                GUIprops.renderWinner();
+                gridContainer.style.pointerEvents = "none";
+                return;
+            }
+            if (gameBoard.checkForFull()) {
+                GUIprops.renderDraw();
+                gridContainer.style.pointerEvents = "none";
+                return;
+            }
             gameLogic.changeTurn();
             GUIprops.setSpan();
         });
     });
 })();
-
-// const gameFlow = (function () {
-//     const setPlayerNames = () => {
-//         for (let i = 0; i < 2; i++) {
-//             players.changeName(
-//                 i,
-//                 prompt(
-//                     `please enter the player ${
-//                         i === 0 ? "one" : "two"
-//                     }'s name with marker "${players.getPlayer(i).marker}"`
-//                 )
-//             );
-//         }
-//     };
-
-//     const startingPlayer = () => {
-//         gameLogic.setStartingPlayer(
-//             +prompt(
-//                 "Which player should start the game?" +
-//                     "\n\n" +
-//                     "[1] Player number 1" +
-//                     "\n" +
-//                     "[2] Player number 2" +
-//                     "\n" +
-//                     "[3] Random"
-//             )
-//         );
-//     };
-
-//     const playRound = () => {
-//         let playerChoice = gameBoard.updateWithPlayerChoice(
-//             ...prompt(
-//                 `${gameLogic.playerTurnRenderer()}\n\n` +
-//                     `${gameBoard.boardRenderer()}\n\n` +
-//                     `${gameLogic.playerInputGuideRenderer()}\n`
-//             )
-//                 .split(",")
-//                 .map((num) => +num)
-//         );
-//         while (playerChoice === false) {
-//             alert("The inputted cell is marked already");
-//             playerChoice = gameBoard.updateWithPlayerChoice(
-//                 ...prompt(
-//                     `${gameLogic.playerTurnRenderer()}\n\n` +
-//                         `${gameBoard.boardRenderer()}\n\n` +
-//                         `${gameLogic.playerInputGuideRenderer()}\n`
-//                 )
-//                     .split(",")
-//                     .map((num) => +num)
-//             );
-//         }
-//         if (gameLogic.checkForWinner() === false) {
-//             gameLogic.changeTurn();
-//         } else {
-//             return true;
-//         }
-//     };
-
-//     const oneFullGame = () => {
-//         let haveWinner = false;
-//         startingPlayer();
-//         while (1) {
-//             let isWin = playRound();
-//             let isFull = gameBoard.checkForFull();
-//             if (isFull === true) break;
-//             if (isWin === true) {
-//                 haveWinner = true;
-//                 break;
-//             }
-//         }
-//         if (haveWinner === true) {
-//             alert(
-//                 `${gameLogic.winnerRenderer()}\n\n` +
-//                     `${gameBoard.boardRenderer()}\n`
-//             );
-//         } else {
-//             alert(
-//                 `${gameLogic.noWinnerRenderer()}\n\n` +
-//                     `${gameBoard.boardRenderer()}\n`
-//             );
-//         }
-//         return +prompt(
-//             "Do you want to play again?\n\n" + "[1] Yes\n" + "[2] No\n"
-//         );
-//     };
-//     return { setPlayerNames, startingPlayer, playRound, oneFullGame };
-// })();
-
-// function startGame() {
-//     gameFlow.setPlayerNames();
-//     while (1) {
-//         let playAgain = gameFlow.oneFullGame();
-//         if (playAgain === 1) {
-//             gameBoard.cleanBoard();
-//         } else break;
-//     }
-//     alert("Thank you for playing my game");
-// }

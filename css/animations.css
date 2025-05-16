@@ -18,3 +18,13 @@
         transform: translateX(0);
     }
 }
+
+@keyframes winner {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
