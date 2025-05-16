@@ -10,6 +10,8 @@ const selection = document.querySelectorAll(".container div");
 
 const playBtn = startingPlayer.querySelector(".play-btn");
 
+const game = document.querySelector(".game");
+
 startBtn.addEventListener("click", () => {
     init.classList.add("hidden");
     setTimeout(() => {
@@ -60,4 +62,7 @@ playBtn.addEventListener("click", () => {
         return;
     }
     startingPlayer.classList.add("hidden");
+    setTimeout(() => {
+        game.classList.remove("hidden");
+    }, 1010);
 });

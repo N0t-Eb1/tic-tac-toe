@@ -111,11 +111,11 @@ section {
         }
 
         & .circle {
-            fill: lightskyblue;
+            fill: #87cefa;
         }
 
         & .x {
-            fill: lightcoral;
+            fill: #f08080;
         }
     }
 }
@@ -188,9 +188,61 @@ header {
     }
 }
 
+.game {
+    gap: 4rem;
+    > div {
+        font-size: 1.5rem;
+        user-select: none;
+    }
+
+    & .grid div svg {
+        width: 3.5rem;
+        aspect-ratio: 1/1;
+        transition-property: opacity, display, transform;
+        transition-duration: 0.2s;
+        transition-behavior: allow-discrete;
+
+        &.circle {
+            fill: #87cefa;
+        }
+
+        &.x {
+            fill: #f08080;
+        }
+    }
+}
+
+.grid {
+    width: 17.514375rem;
+    aspect-ratio: 1/1;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, calc(17.514375rem / 3));
+
+    & div:nth-child(-n + 6) {
+        border-bottom: 4px solid var(--primary);
+    }
+
+    & div:not(:nth-child(3n)) {
+        border-right: 4px solid var(--primary);
+    }
+
+    & div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
 @starting-style {
-    section {
+    section,
+    svg {
         opacity: 0;
+    }
+    section {
         transform: translateY(9rem);
+    }
+    svg {
+        transform: translateY(50%);
     }
 }

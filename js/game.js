@@ -10,17 +10,6 @@ const gameBoard = (function () {
         }
     };
 
-    const boardRenderer = () => {
-        return board.reduce((str, row, i) => {
-            row.forEach((cell, i) => {
-                str += cell;
-                if (i !== 2) str += "   ";
-            });
-            if (i !== 2) str += "\n";
-            return str;
-        }, "");
-    };
-
     const getBoard = () => board;
 
     const updateWithPlayerChoice = (row, column) => {
@@ -43,7 +32,6 @@ const gameBoard = (function () {
     return {
         getBoard,
         updateWithPlayerChoice,
-        boardRenderer,
         cleanBoard,
         checkForFull,
     };
@@ -54,10 +42,12 @@ const players = (function () {
         {
             name: null,
             marker: "O",
+            color: "#87cefa",
         },
         {
             name: null,
             marker: "X",
+            color: "#f08080",
         },
     ];
 
@@ -95,25 +85,6 @@ const gameLogic = (function () {
             currentPlayer === players.getPlayer(0)
                 ? players.getPlayer(1)
                 : players.getPlayer(0);
-    };
-
-    const playerTurnRenderer = () => {
-        return `it's ${currentPlayer.name}'s turn`;
-    };
-
-    const winnerRenderer = () => {
-        return `${currentPlayer.name} won!`;
-    };
-
-    const noWinnerRenderer = () => {
-        return "There was no winner";
-    };
-
-    const playerInputGuideRenderer = () => {
-        return (
-            "Please enter your input in the following format or the game will end:\n" +
-            '"row number, column number"'
-        );
     };
 
     const checkRow = (row) => {
@@ -167,15 +138,13 @@ const gameLogic = (function () {
         setStartingPlayer,
         getCurrent,
         changeTurn,
-        playerTurnRenderer,
-        winnerRenderer,
-        noWinnerRenderer,
-        playerInputGuideRenderer,
         checkForWinner,
     };
 })();
 
 const GUIprops = (function () {
+    const span = document.querySelector(".player-turn span");
+
     const setNames = () => {
         const inputFields = document.querySelectorAll("#player-name");
         inputFields.forEach((elm, i) => {
@@ -194,7 +163,37 @@ const GUIprops = (function () {
         });
     };
 
-    return { setNames, setStartingPlayer };
+    const setSpan = () => {
+        span.textContent = gameLogic.getCurrent().name;
+        span.style.color = gameLogic.getCurrent().color;
+    };
+
+    const placeMarker = (cell) => {
+        cell.innerHTML =
+            gameLogic.getCurrent().marker === "O"
+                ? `<svg
+                    class="circle"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 -960 960 960"
+                    fill="#e3e3e3"
+                >
+                    <path
+                        d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"
+                    />
+                </svg>`
+                : `<svg
+                    class="x"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 -960 960 960"
+                    fill="#e3e3e3"
+                >
+                    <path
+                        d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"
+                    />
+                </svg>`;
+    };
+
+    return { setNames, setStartingPlayer, setSpan, placeMarker };
 })();
 
 const actions = (function () {
@@ -204,6 +203,27 @@ const actions = (function () {
 
     document.querySelector(".play-btn").addEventListener("click", () => {
         GUIprops.setStartingPlayer();
+        GUIprops.setSpan();
+    });
+
+    const gridCells = document.querySelectorAll(".grid div");
+    gridCells.forEach((cell) => {
+        cell.addEventListener("click", () => {
+            if (cell.firstElementChild !== null) {
+                cell.firstElementChild.classList.add("error--short");
+                setTimeout(() => {
+                    cell.firstElementChild.classList.remove("error--short");
+                }, 300);
+                return;
+            }
+            GUIprops.placeMarker(cell);
+            gameBoard.updateWithPlayerChoice(
+                +cell.dataset.row,
+                +cell.dataset.col
+            );
+            gameLogic.changeTurn();
+            GUIprops.setSpan();
+        });
     });
 })();
 
