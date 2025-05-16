@@ -336,6 +336,7 @@ const actions = (function () {
         }, 800);
         setTimeout(() => {
             startingPlayer.classList.remove("hidden");
+            restartBtn.classList.add("invisible");
         }, 810);
     });
 })();
