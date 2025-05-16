@@ -234,6 +234,12 @@ header {
     }
 }
 
+.restart-btn {
+    transition-property: opacity, visibility, transform;
+    transition-duration: 0.8s;
+    transition-behavior: allow-discrete;
+}
+
 @starting-style {
     section,
     svg {

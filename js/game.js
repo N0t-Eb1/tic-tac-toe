@@ -134,8 +134,6 @@ const gameLogic = (function () {
 })();
 
 const GUIprops = (function () {
-    const span = document.querySelector(".player-turn span");
-
     const setNames = () => {
         const inputFields = document.querySelectorAll("#player-name");
         inputFields.forEach((elm, i) => {
@@ -155,6 +153,7 @@ const GUIprops = (function () {
     };
 
     const setSpan = () => {
+        const span = document.querySelector(".player-turn span");
         span.textContent = gameLogic.getCurrent().name;
         span.style.color = gameLogic.getCurrent().color;
     };
@@ -253,6 +252,24 @@ const GUIprops = (function () {
         document.querySelector(".player-turn").textContent = "it's a draw!";
     };
 
+    const toggleRestart = () => {
+        document.querySelector(".restart-btn").classList.remove("invisible");
+    };
+
+    const cleanUp = () => {
+        document.querySelector(".selected").classList.remove("selected");
+        const elem = document.createElement("div");
+        elem.classList.add("player-turn");
+        elem.innerHTML = `it's <span></span>'s turn`;
+        document.querySelector(".game > div").replaceWith(elem);
+        gameBoard.cleanBoard();
+        const markers = document.querySelectorAll(".grid div svg");
+        markers.forEach((marker) => {
+            marker.remove();
+        });
+        document.querySelector(".grid").style.pointerEvents = "auto";
+    };
+
     return {
         setNames,
         setStartingPlayer,
@@ -261,6 +278,8 @@ const GUIprops = (function () {
         checkWinner,
         renderWinner,
         renderDraw,
+        toggleRestart,
+        cleanUp,
     };
 })();
 
@@ -293,15 +312,30 @@ const actions = (function () {
             if (GUIprops.checkWinner()) {
                 GUIprops.renderWinner();
                 gridContainer.style.pointerEvents = "none";
+                GUIprops.toggleRestart();
                 return;
             }
             if (gameBoard.checkForFull()) {
                 GUIprops.renderDraw();
                 gridContainer.style.pointerEvents = "none";
+                GUIprops.toggleRestart();
                 return;
             }
             gameLogic.changeTurn();
             GUIprops.setSpan();
         });
+    });
+
+    const restartBtn = document.querySelector(".restart-btn");
+    const game = document.querySelector(".game");
+    const startingPlayer = document.querySelector(".starting-player");
+    restartBtn.addEventListener("click", () => {
+        game.classList.add("hidden");
+        setTimeout(() => {
+            GUIprops.cleanUp();
+        }, 800);
+        setTimeout(() => {
+            startingPlayer.classList.remove("hidden");
+        }, 810);
     });
 })();
