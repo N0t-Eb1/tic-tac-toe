@@ -19,8 +19,8 @@ const gameBoard = (function () {
 
     const checkForFull = () => {
         let arr = [];
-        board.forEach((row) => {
-            row.forEach((cell) => {
+        board.forEach(row => {
+            row.forEach(cell => {
                 if (cell === "I") arr.push("I");
             });
         });
@@ -51,7 +51,7 @@ const players = (function () {
         },
     ];
 
-    const getPlayer = (index) => players[index];
+    const getPlayer = index => players[index];
 
     const changeName = (index, name) => {
         players[index].name = name;
@@ -65,7 +65,7 @@ const gameLogic = (function () {
 
     const getCurrent = () => currentPlayer;
 
-    const setStartingPlayer = (userInput) => {
+    const setStartingPlayer = userInput => {
         switch (userInput) {
             case 1:
                 currentPlayer = players.getPlayer(0);
@@ -87,16 +87,15 @@ const gameLogic = (function () {
                 : players.getPlayer(0);
     };
 
-    const checkRow = (row) => {
+    const checkRow = row => {
         return gameBoard
             .getBoard()
-            [row - 1].filter((cell) => cell === currentPlayer.marker).length ===
-            3
+            [row - 1].filter(cell => cell === currentPlayer.marker).length === 3
             ? true
             : false;
     };
 
-    const checkColumn = (column) => {
+    const checkColumn = column => {
         const arr = [];
         for (let i = 0; i < 3; i++) {
             if (gameBoard.getBoard()[i][column - 1] === currentPlayer.marker)
@@ -107,7 +106,7 @@ const gameLogic = (function () {
 
     //lineNumber 1 = top left to bottom right
     //lineNumber 2 = top right to bottom left
-    const slopeLinesCheck = (lineNumber) => {
+    const slopeLinesCheck = lineNumber => {
         const arr = [];
         if (lineNumber === 1) {
             for (let i = 0; i < 3; i++) {
@@ -146,7 +145,7 @@ const GUIprops = (function () {
 
     const setStartingPlayer = () => {
         const options = document.querySelectorAll(".container div");
-        options.forEach((elm) => {
+        options.forEach(elm => {
             if (elm.classList.contains("selected"))
                 gameLogic.setStartingPlayer(+elm.dataset.player);
         });
@@ -158,7 +157,7 @@ const GUIprops = (function () {
         span.style.color = gameLogic.getCurrent().color;
     };
 
-    const placeMarker = (cell) => {
+    const placeMarker = cell => {
         cell.innerHTML =
             gameLogic.getCurrent().marker === "O"
                 ? `<svg
@@ -231,7 +230,7 @@ const GUIprops = (function () {
         if (elems.length === 0) {
             return false;
         } else {
-            elems.forEach((elem) => {
+            elems.forEach(elem => {
                 elem.classList.add("winner");
             });
             return true;
@@ -260,11 +259,11 @@ const GUIprops = (function () {
         document.querySelector(".selected").classList.remove("selected");
         const elem = document.createElement("div");
         elem.classList.add("player-turn");
-        elem.innerHTML = `it's <span></span>'s turn`;
+        elem.innerHTML = `<span></span>'s turn`;
         document.querySelector(".game > div").replaceWith(elem);
         gameBoard.cleanBoard();
         const markers = document.querySelectorAll(".grid div svg");
-        markers.forEach((marker) => {
+        markers.forEach(marker => {
             marker.remove();
         });
         document.querySelector(".grid").style.pointerEvents = "auto";
@@ -295,7 +294,7 @@ const actions = (function () {
 
     const gridContainer = document.querySelector(".grid");
     const gridCells = document.querySelectorAll(".grid div");
-    gridCells.forEach((cell) => {
+    gridCells.forEach(cell => {
         cell.addEventListener("click", () => {
             if (cell.firstElementChild !== null) {
                 cell.firstElementChild.classList.add("error--short");
